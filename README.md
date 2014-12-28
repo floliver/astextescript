@@ -2,6 +2,7 @@ astextescript
 =============
 
 Script for astexte from epitech
+I did it very quickly so any improvements are welcome ! (there is a lot x) )
 
 java -jar target/AstexteXLS-1.0-SNAPSHOT.jar -file "B1-EE-LETTRE-ARGUMENTEE-fichier-notes_ALL-MODELE.xlsx" -folder "./rendu"
 
