@@ -54,6 +54,9 @@ public class ReadXLSFiles {
         List<Path> lpath = null;
         try {
             lpath = Files.list(Paths.get(pathToFolder)).filter(p -> p.toString().toLowerCase().endsWith(".xlsx")).collect(Collectors.toList());
+            System.out.println(Files.list(Paths.get(pathToFolder)).filter(p -> p.toString().toLowerCase().endsWith(".xlsx")).collect(Collectors.toList()).size());
+            System.out.println(Files.list(Paths.get(pathToFolder)).filter(p -> p.toString().toLowerCase().endsWith(".xls")).collect(Collectors.toList()).size());
+            lpath.addAll(Files.list(Paths.get(pathToFolder)).filter(p -> p.toString().toLowerCase().endsWith(".xls")).collect(Collectors.toList()));
         } catch (IOException ex) {
             Logger.getLogger(ReadXLSFiles.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,6 +97,7 @@ public class ReadXLSFiles {
                         }
                     }
                     if (found) {
+                        System.out.println("found ! ");
                         ResultRow rr = new ResultRow();
                         Row rowFound = rowIterator.next();
                         Iterator<Cell> c = rowFound.cellIterator();
@@ -116,6 +120,7 @@ public class ReadXLSFiles {
                 }
                 file.close();
             } catch (IOException | InvalidFormatException e) {
+                e.printStackTrace();
             }
         }
         return resultList;

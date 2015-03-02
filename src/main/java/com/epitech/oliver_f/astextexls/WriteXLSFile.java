@@ -61,14 +61,13 @@ public class WriteXLSFile {
                         } catch (NumberFormatException e) {
                             cell.setCellValue(results.get(listIndex).result.get(cellIndex));
                         }
-                        
-                        
                         cellIndex++;
                     }
                     listIndex++;
                 }
                 i++;
             }
+            System.out.println("listindex " + listIndex);
             file.close();
             FileOutputStream outFile = new FileOutputStream(new File(pathToFile));
             wb.write(outFile);

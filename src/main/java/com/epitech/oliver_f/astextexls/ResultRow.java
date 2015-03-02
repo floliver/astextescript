@@ -15,5 +15,10 @@ import java.util.List;
 public class ResultRow {
     
     public List<String> result = new ArrayList<String>();
+
+    @Override
+    public String toString() {
+        return "ResultRow{" + "result=" + result + '}';
+    }
     
 }

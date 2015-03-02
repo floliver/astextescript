@@ -54,6 +54,8 @@ public class MainClass {
             System.out.println("OK");
             ReadXLSFiles readXLSFiles = new ReadXLSFiles(cl.getOptionValue("folder"));
             List<ResultRow> lRows = readXLSFiles.parse();
+            System.out.println("reading ..." + lRows.size());
+            lRows.stream().forEach(p -> System.out.println("p : " + p));
             WriteXLSFile writeXLSFile = new WriteXLSFile(lRows, cl.getOptionValue("file"));
             writeXLSFile.write();
 
