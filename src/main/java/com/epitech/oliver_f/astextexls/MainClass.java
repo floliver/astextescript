@@ -5,9 +5,17 @@
  */
 package com.epitech.oliver_f.astextexls;
 
+import java.io.File;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -19,7 +27,7 @@ import org.apache.commons.cli.ParseException;
  *
  * @author florianoliver
  */
-public class MainClass {
+public class MainClass extends Application {
 
     private static final Options options = new Options();
 
@@ -42,27 +50,43 @@ public class MainClass {
             HelpFormatter hf = new HelpFormatter();
             hf.printHelp("astexte script", options);
         }
-//        System.out.println("OK");
-//        ReadXLSFiles rxlsfile = new ReadXLSFiles("../rendu");
-//        List<ResultRow> lRows = rxlsfile.parse();
-//        if (lRows != null) {
-//            System.out.println("bien ouej");
-//            WriteXLSFile writeXLSFile = new WriteXLSFile(lRows, "../B1-EE-LETTRE-ARGUMENTEE-fichier-notes_ALL-MODELE.xlsx");
-//            writeXLSFile.write();
-//        }
         if (cl.hasOption("folder") && cl.hasOption("file")) {
+            launchWriteAndRead(cl.getOptionValue("folder"), cl.getOptionValue("file"));
             System.out.println("OK");
-            ReadXLSFiles readXLSFiles = new ReadXLSFiles(cl.getOptionValue("folder"));
-            List<ResultRow> lRows = readXLSFiles.parse();
-            System.out.println("reading ..." + lRows.size());
-            lRows.stream().forEach(p -> System.out.println("p : " + p));
-            WriteXLSFile writeXLSFile = new WriteXLSFile(lRows, cl.getOptionValue("file"));
-            writeXLSFile.write();
 
         } else {
             HelpFormatter hf = new HelpFormatter();
             hf.printHelp("astexte script", options);
         }
+        launch(args);
+    }
+
+    private static void launchWriteAndRead(String folder, String file) {
+        ReadXLSFiles readXLSFiles = new ReadXLSFiles(folder);
+        List<ResultRow> lRows = readXLSFiles.parse();
+        System.out.println("reading ..." + lRows.size());
+        lRows.stream().forEach(p -> System.out.println("p : " + p));
+        WriteXLSFile writeXLSFile = new WriteXLSFile(lRows, file);
+        writeXLSFile.write();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Hello World!");
+        DirectoryChooser dChooser = new DirectoryChooser();
+        dChooser.setTitle("Choose the directory of the excel files");
+        File defaultDirectory = new File("c:/");
+        dChooser.setInitialDirectory(defaultDirectory);
+        File selectedDirectory = dChooser.showDialog(primaryStage);
+        StackPane root = new StackPane();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open excel 'ALL' File");
+        File choosenFile = fileChooser.showOpenDialog(primaryStage);
+        launchWriteAndRead(selectedDirectory.getAbsolutePath(),  choosenFile.getAbsolutePath());
+        //root.getChildren().add(btn);
+        //primaryStage.setScene(new Scene(root, 300, 250));
+        //primaryStage.show();
+        Platform.exit();
 
     }
 

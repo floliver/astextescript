@@ -47,7 +47,7 @@ public class WriteXLSFile {
             while (rowIterator.hasNext() && listIndex < results.size()) {
                 Row row = rowIterator.next();
                 if (i > 1) {
-                    Iterator<Cell> cellIterator = row.cellIterator();;
+                    Iterator<Cell> cellIterator = row.cellIterator();
                     int cellIndex = 0;
                     while (cellIterator.hasNext()) {
                         Cell cell = cellIterator.next();
@@ -74,9 +74,7 @@ public class WriteXLSFile {
             outFile.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(WriteXLSFile.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(WriteXLSFile.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidFormatException ex) {
+        } catch (IOException | InvalidFormatException ex) {
             Logger.getLogger(WriteXLSFile.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
